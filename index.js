@@ -23,15 +23,14 @@ app.use(cookieParser());
 const { PORT, DB } = require("./env");
 
 const server = require('http').createServer(app);
-const io = require('socket.io')(server, {
-  cors : {
-    origin : [
-      "http://localhost:3000", 
-      "https://dgteam.vercel.app", 
-      "http://localhost:3002", 
-      "https://team.digitalgregg.com"
-    ]
-  }
+const io = require("socket.io")(server, {
+  cors: {
+    origin: [
+      "http://localhost:3000",
+      "https://dgteam.vercel.app",
+      "https://team-client.vercel.app/",
+    ],
+  },
 });
 
 io.on('connection', (socket) => {
