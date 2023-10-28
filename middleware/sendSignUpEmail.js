@@ -13,9 +13,10 @@ const {
 const send_mail = async (recipient, fullName, username, password) => {
 
     let transporter = nodemailer.createTransport({
-        host: MAILER_HOST,
-        // host: "smtp.gmail.com",
-        port: 465,
+        service: "gmail",
+        // host: MAILER_HOST,
+        host: "smtp.gmail.com",
+        port: 587,
         secure: true,
         auth: {
             user: MAILER_USERNAME,
@@ -29,11 +30,11 @@ const send_mail = async (recipient, fullName, username, password) => {
 
 
     const mailOptions = {
-        from: "Digital Gregg <no-reply@digitalgregg.com>",
+        from: "Asif <asifhasanirfan@gmail.com>",
         to: recipient,
-        subject: 'Account created from Digital Gregg Team',
+        subject: 'Account created from Team',
         html: `<h1>Hello ${fullName}</h1>
-      <p>You have request your account. We take time to process the issue and here we approved your request and sending you the DG Team account. </p>
+      <p>You have request your account. We take time to process the issue and here we approved your request and sending you the Team account. </p>
       <h4>Your account username: <span style='color: red'>${username}</span></h4>
       <h4>Your account password: <span style='color: red'>${password}</span></h4> 
       `

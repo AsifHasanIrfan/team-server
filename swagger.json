@@ -1,13 +1,13 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "DG-TEAM API",
-    "description": "DG-TEAM REST api for testing purposes",
+    "title": "TEAM API",
+    "description": "TEAM REST api for testing purposes",
     "version": "1.0.0",
     "contact": {
-      "name": "Digital Gregg",
-      "url": "https://github.com/digitalgregg",
-      "email": "digitalgregg@gmail.com"
+      "name": "Asif Hasan Irfan",
+      "url": "https://github.com/AsifHasanIrfan",
+      "email": "asifhasanirfan@gmail.com"
     },
     "license": {
       "name": "Apache 2.0",

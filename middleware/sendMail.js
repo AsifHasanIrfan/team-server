@@ -14,9 +14,10 @@ const {
 const send_mail = async (requestId, recipient, fullName, newPass) => {
 
   let transporter = nodemailer.createTransport({
-    host: MAILER_HOST,
-    // host: "smtp.gmail.com",
-    port: 465,
+    service: "gmail",
+    // host: MAILER_HOST,
+    host: "smtp.gmail.com",
+    port: 587,
     secure: true,
     auth: {
       user: MAILER_USERNAME,
@@ -30,13 +31,13 @@ const send_mail = async (requestId, recipient, fullName, newPass) => {
 
 
   const mailOptions = {
-    from: "Digital Gregg <no-reply@digitalgregg.com>",
+    from: "Asif <asifhasanirfan@gmail.com>",
     to: recipient,
-    subject: 'Password reset request from Digital Gregg Team',
+    subject: "Password reset request from Team",
     html: `<h1>Hello ${fullName}</h1>
       <p>You have request your password. We take time to process the issue and here we approved your request and sending you the new password. Please, try to remember your password.</p>
       <h4>Your new password is: <span style='color: red'>${newPass}</span></h4>
-      `
+      `,
   };
 
   // verify connection configuration

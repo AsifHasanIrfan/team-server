@@ -1,14 +1,14 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "This is server of Digital Gregg Team",
+  "description": "This is server of Team",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
     "start": "nodemon index.js"
   },
   "keywords": [],
-  "author": "Digital Gregg",
+  "author": "Asif",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -26,13 +26,5 @@
     "socket.io": "^4.5.2",
     "swagger-ui-express": "^4.5.0",
     "uuid": "^9.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/digitalgregg/dgteam-backend.git"
-  },
-  "bugs": {
-    "url": "https://github.com/digitalgregg/dgteam-backend/issues"
-  },
-  "homepage": "https://github.com/digitalgregg/dgteam-backend#readme"
+  }
 }
