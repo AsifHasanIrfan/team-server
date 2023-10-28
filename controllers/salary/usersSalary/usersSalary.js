@@ -7,7 +7,7 @@ const Achievement = require("../../../models/achievement");
 module.exports = async (req, res) => {
 
     // if not this mail can not access this api
-    if (req.user.email !== 'greggmckee3@gmail.com') {
+    if (req.user.email !== 'asifhasanirfan@gmail.com') {
         return res.send({ message: 'You are not authorized!', success: false });
     }
 

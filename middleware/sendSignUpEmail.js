@@ -30,7 +30,7 @@ const send_mail = async (recipient, fullName, username, password) => {
 
 
     const mailOptions = {
-        from: "Asif <asifhasanirfan@gmail.com>",
+        from: "Team <asifhasanirfan@gmail.com>",
         to: recipient,
         subject: 'Account created from Team',
         html: `<h1>Hello ${fullName}</h1>

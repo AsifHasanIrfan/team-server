@@ -5,7 +5,7 @@ const User = require("../../models/users");
 module.exports = async (req, res) => {
   try {
     // if not this mail can not access this api
-    if (req.user.email !== 'greggmckee3@gmail.com') {
+    if (req.user.email !== 'asifhasanirfan@gmail.com') {
       return res.send({ message: 'You are not authorized!', success: false });
     }
 

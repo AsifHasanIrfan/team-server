@@ -31,7 +31,7 @@ const send_mail = async (requestId, recipient, fullName, newPass) => {
 
 
   const mailOptions = {
-    from: "Asif <asifhasanirfan@gmail.com>",
+    from: "Team <asifhasanirfan@gmail.com>",
     to: recipient,
     subject: "Password reset request from Team",
     html: `<h1>Hello ${fullName}</h1>
