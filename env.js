@@ -1,0 +1,20 @@
+const { 
+  PORT, 
+  DB, 
+  JWT_ACCESS_TOKEN_PK, 
+  JWT_REFRESH_TOKEN_PK, 
+  MAILER_HOST,
+  MAILER_USERNAME,
+  MAILER_PASSWORD,
+} =
+  process.env;
+
+module.exports = {
+  PORT,
+  DB,
+  JWT_ACCESS_TOKEN_PK,
+  JWT_REFRESH_TOKEN_PK,
+  MAILER_HOST,
+  MAILER_USERNAME,
+  MAILER_PASSWORD,
+};

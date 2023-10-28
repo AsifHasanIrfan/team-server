@@ -1,0 +1,820 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "DG-TEAM API",
+    "description": "DG-TEAM REST api for testing purposes",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Digital Gregg",
+      "url": "https://github.com/digitalgregg",
+      "email": "digitalgregg@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+
+  "tags": [
+    {
+      "name": "Users",
+      "description": "user end-point"
+    },
+    {
+      "name": "TimeOff",
+      "description": "time off end-point"
+    },
+    {
+      "name": "Tasks",
+      "description": "task end-point"
+    },
+    {
+      "name": "Salary",
+      "description": "salary end-point"
+    },
+    {
+      "name": "Events",
+      "description": "events end-point"
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://dgteam-backend.herokuapp.com/",
+      "basePath": "/api",
+      "description": "Development Server"
+    }
+  ],
+  "paths": {
+    "/api/signup": {
+      "post": {
+        "description": "Create new User",
+        "tags": ["Users"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Signup"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully"
+          },
+          "400": {
+            "description": "Fill up all required fields"
+          },
+          "409": {
+            "description": "User already exist!"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/signin": {
+      "post": {
+        "description": "User Login",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Login successfully"
+          },
+          "400": {
+            "description": "Need email and password"
+          },
+          "403": {
+            "description": "Invalid credentials!"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "description": "Get all users",
+        "tags": ["Users"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully get users"
+          },
+          "400": {
+            "description": "Token is missing!"
+          },
+          "500": {
+            "description": "Failed to get users"
+          }
+        }
+      }
+    },
+    "/api/user/update-request": {
+      "put": {
+        "description": "Update request for user password information",
+        "tags": ["Users"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully updated users information"
+          },
+          "400": {
+            "description": "Token is missing!"
+          },
+          "500": {
+            "description": "Something went wrong!"
+          }
+        }
+      }
+    },
+    "/api/user/update-approve/{id}": {
+      "put": {
+        "description": "Update approve for user password information",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserAction"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully updated users information"
+          },
+          "400": {
+            "description": "Token is missing!"
+          },
+          "500": {
+            "description": "Something went wrong!"
+          }
+        }
+      }
+    },
+    "/api/timeoff/create": {
+      "post": {
+        "description": "Create timeoff",
+        "tags": ["TimeOff"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTimeOff"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created a new time off request."
+          },
+          "400": {
+            "description": "Need every crenditals!"
+          },
+          "403": {
+            "description": "Invalid credentials!"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/timeoff": {
+      "get": {
+        "description": "Get all timeoff",
+        "tags": ["TimeOff"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get all time off request."
+          },
+          "403": {
+            "description": "Invalid credentials!"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/timeoff/{timeOffId}/update": {
+      "patch": {
+        "description": "Update timeoff status",
+        "tags": ["TimeOff"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "timeOffId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTimeOff"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Time off successfully updated."
+          },
+          "404": {
+            "description": "Time off not found!"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/task/create-task/{userId}": {
+      "post": {
+        "description": "Create new task",
+        "tags": ["Tasks"],
+        "parameters": [
+          {
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "name": "userId",
+            "required": true
+          }
+        ],
+        "security": {
+          "bearerAuth": []
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTask"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task created successfully."
+          },
+          "400": {
+            "description": "Fill up all required fields"
+          },
+          "403": {
+            "description": "Only admin can create task"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/task/update-task-status/{taskId}": {
+      "put": {
+        "description": "Update task information",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "taskId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": ["Tasks"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTask"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task successfully updated."
+          },
+          "404": {
+            "description": "Task not found"
+          },
+          "500": {
+            "description": "Failed to update task. Something went wrong!"
+          }
+        }
+      }
+    },
+    "/api/salary": {
+      "get": {
+        "description": "Get all events",
+        "tags": ["Salary"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully get all data"
+          },
+          "400": {
+            "description": "Token not found!"
+          },
+          "404": {
+            "description": "Token not found"
+          },
+          "409": {
+            "description": "Your token is not verified"
+          },
+          "500": {
+            "description": "Failed to get salary data"
+          }
+        }
+      }
+    },
+    "/api/salary/create": {
+      "post": {
+        "description": "Create salary",
+        "tags": ["Salary"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSalary"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully salary submitted."
+          },
+          "400": {
+            "description": "Fill up all required fields"
+          },
+          "404": {
+            "description": "Token not found."
+          },
+          "409": {
+            "description": "Your token is not verified."
+          },
+          "500": {
+            "description": "Failed to create salary."
+          }
+        }
+      }
+    },
+    "/api/salary/{salaryId}/update": {
+      "patch": {
+        "description": "Get all events",
+        "tags": ["Salary"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "salaryId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Salary status updated successfully."
+          },
+          "404": {
+            "description": "Salary not found!"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/events": {
+      "get": {
+        "description": "Get all events",
+        "tags": ["Events"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully get event"
+          },
+          "400": {
+            "description": "Token not found!"
+          },
+          "500": {
+            "description": "Failed to get event"
+          }
+        }
+      }
+    },
+    "/api/event/create": {
+      "post": {
+        "description": "Create new event",
+        "tags": ["Events"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEvent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully event created"
+          },
+          "403": {
+            "description": "Only admin can create event"
+          },
+          "500": {
+            "description": "Failed to create event"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Signup": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "Raihan hossen"
+          },
+
+          "firstName": {
+            "type": "string",
+            "example": "Raihan",
+            "required": true
+          },
+
+          "lastName": {
+            "type": "string",
+            "example": "Hossen",
+            "required": true
+          },
+          "email": {
+            "type": "string",
+            "example": "raihandossen@gmail.com",
+            "required": true
+          },
+
+          "password": {
+            "type": "string",
+            "example": "rafsghsdcetetdgdg",
+            "required": true
+          },
+          "phone": {
+            "type": "string",
+            "example": "+9991234556"
+          },
+          "experience": {
+            "type": "string",
+            "example": "web developer"
+          },
+          "avatar": {
+            "type": "string",
+            "default": "https://cutt.ly/UAXRFXO"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["admin", "employee"],
+            "default": "employee",
+            "required": true
+          },
+          "designation": {
+            "type": "string",
+            "required": true,
+            "example": "web developer"
+          },
+          "workingAs": {
+            "type": "string",
+            "default": "employee",
+            "required": true
+          },
+          "address": {
+            "type": "string",
+            "example": "Chadpur, Bangladesh"
+          },
+          "salary": {
+            "type": "number",
+            "example": "1000000"
+          },
+          "bio": {
+            "type": "string",
+            "example": "I am a pro web developer"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": false
+          },
+          "socials": {
+            "type": "object",
+            "properties": {
+              "facebook": {
+                "type": "string",
+                "example": "https://facebook.com"
+              }
+            }
+          },
+          "availableTimeOff": {
+            "type": "number",
+            "default": 0
+          },
+          "updateRequest": {
+            "type": "array"
+          },
+          "salaries": {
+            "type": "string"
+          },
+          "timeOff": {
+            "type": "string"
+          },
+          "tasks": {
+            "type": "string"
+          }
+        }
+      },
+      "Login": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "admin01"
+          },
+          "password": {
+            "type": "string",
+            "example": "admin01"
+          }
+        }
+      },
+      "UpdateUser": {
+        "properties": {
+          "password": {
+            "type": "string",
+            "example": "admin01"
+          }
+        }
+      },
+      "UpdateUserAction": {
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": ["approve", "reject"]
+          }
+        }
+      },
+      "CreateSalary": {
+        "properties": {
+          "user": {
+            "type": "string",
+            "example": "63138151638c7ae995415ff6"
+          },
+          "startDate": {
+            "type": "string",
+            "example": "12-10-22"
+          },
+          "endDate": {
+            "type": "string",
+            "example": "12-12-22"
+          },
+          "amount": {
+            "type": "number",
+            "example": "2000"
+          },
+          "arriveBy": {
+            "type": "string",
+            "example": "12-12-22"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["processing", "paid"],
+            "default": "processing"
+          }
+        }
+      },
+      "CreateTimeOff": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "Vacation"
+          },
+          "startDate": {
+            "type": "string",
+            "example": "2020-12-12"
+          },
+          "endDate": {
+            "type": "string",
+            "example": "2020-12-12"
+          },
+          "description": {
+            "type": "string",
+            "example": "Reason"
+          },
+          "user": {
+            "type": "string",
+            "example": "63138151638c7ae995415ff6"
+          }
+        }
+      },
+      "UpdateTimeOff": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "approved"
+          }
+        }
+      },
+      "CreateTask": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "This is task title"
+          },
+          "description": {
+            "type": "string",
+            "example": "This is task description"
+          },
+          "dueDate": {
+            "type": "string",
+            "example": "09-06-22"
+          },
+          "dueTime": {
+            "type": "string",
+            "example": "12:00pm"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "in-progress",
+              "completed",
+              "assinged",
+              "late-task",
+              "approved"
+            ],
+            "default": "in-progress"
+          },
+          "attachments": {
+            "type": "string",
+            "format": "file",
+            "example": "sdhw23535dgcvqgdgjkt.svg"
+          },
+          "worker": {
+            "type": "string",
+            "example": "63138151638c7ae995415ff6"
+          }
+        }
+      },
+      "UpdateTask": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "in-progress",
+              "completed",
+              "assinged",
+              "late-task",
+              "approved"
+            ],
+            "default": "completed"
+          }
+        }
+      },
+      "CreateEvent": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Meeting with Gregg"
+          },
+          "users": {
+            "type": "string",
+            "example": "63138151638c7ae995415ff6"
+          },
+          "date": {
+            "type": "string",
+            "example": "12-10-22",
+            "format": "date"
+          },
+          "startTime": {
+            "type": "string",
+            "example": "12-10-22",
+            "format": "date"
+          },
+          "endTime": {
+            "type": "string",
+            "example": "12-10-22",
+            "format": "date"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "cookie"
+      }
+    },
+    "security": [
+      {
+        "bearerAuth": []
+      },
+      {
+        "cookieAuth": []
+      }
+    ]
+  }
+}

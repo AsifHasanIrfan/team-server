@@ -1,0 +1,76 @@
+// internal import
+const User = require("../../models/users");
+const PurchaseTimeoff = require("../../models/purchaseTimeoff");
+
+module.exports = async (req, res) => {
+    try {
+        // finding user
+        const verifyUser = await User.findOne({ _id: req.params.id });
+
+        // checking is user valid
+        if (!verifyUser) return res.json({ message: "User Not Found!", success: false });
+
+        // checking is that user trying to get data
+        if (req.user._id.toString() !== req.params.id.toString()) {
+            return res.send({ message: 'You are not authorized token!', success: false });
+        }
+
+        // checking is user have access
+        if (verifyUser.workingAs === 'Intern' || verifyUser.workingAs === 'Trial Member' || verifyUser.isArchived) {
+            return res.send({ message: 'You dont have access to this!', success: false });
+        }
+
+        // checking is enough dg coin user have
+        if (verifyUser.dgCoin < req.body.totalCost) return res.json({ message: "You have not enough DG Coin!", success: false });
+
+        // updating
+        if (req.body.type === 'sickDays') {
+            await User.findOneAndUpdate({ _id: req.params.id }, {
+                dgCoin: verifyUser.dgCoin - parseFloat(req.body.totalCost),
+                availableTimeOff: {
+                    ...verifyUser.availableTimeOff,
+                    sickDays: verifyUser.availableTimeOff.sickDays + parseInt(req.body.purchasedDays)
+                }
+            });
+        }
+
+        // updating
+        if (req.body.type === 'vacationDays') {
+            await User.findOneAndUpdate({ _id: req.params.id }, {
+                dgCoin: verifyUser.dgCoin - parseFloat(req.body.totalCost),
+                availableTimeOff: {
+                    ...verifyUser.availableTimeOff,
+                    vacationDays: verifyUser.availableTimeOff.vacationDays + parseInt(req.body.purchasedDays)
+                }
+            });
+        }
+
+        // saaving data 
+        const pruchaseTimeOff = new PurchaseTimeoff({
+            user: req.params.id,
+            type: req.body.type,
+            days: parseInt(req.body.purchasedDays),
+            cost: parseFloat(req.body.totalCost),
+        });
+        const result = await pruchaseTimeOff.save();
+
+        // if data created push to user model
+        if (result._id) {
+            await User.findOneAndUpdate({ _id: req.params.id }, {
+                $push: { purchasedTimeoffs: result._id },
+            }, { new: true });
+        }
+
+        res.json({
+            message: `Purchased ${req.body.type === 'vacationDays' ? 'Vacation' : 'Sick'} Days Successfully!`,
+            success: true,
+        });
+
+    } catch (error) {
+        res.json({
+            error: error.message,
+            message: "Failed to update timeoff day!",
+            success: false,
+        });
+    }
+};
